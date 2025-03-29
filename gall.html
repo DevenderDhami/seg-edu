@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .gallery-img {
+            height: 250px;
+            object-fit: fit;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .modal-dialog {
+            min-width: 40vw;
+            min-height: 80vh;
+        }
+
+        .modal-content {
+            background: transparent;
+            border: none;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: transparent;
+            pointer-events: none;
+        }
+
+        .prev-btn, .next-btn {
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            color: white;
+            font-size: 24px;
+            transition: background 0.3s, transform 0.2s;
+            z-index: 10;
+        }
+
+        .prev-btn:hover, .next-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
+        }
+
+        .prev-btn {
+            left: 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .next-btn {
+            right: 0;
+            border-radius: 10px 0 0 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container my-5">
+        <h2 class="text-center fw-bold mb-4">Gallery</h2>
+        <div class="row g-3" id="galleryContainer"></div>
+    </div>
+
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center position-relative">
+                    <button class="btn btn-dark prev-btn" onclick="prevImage()">&#8249;</button>
+                    <img id="modalImage" class="modal-img" src="" alt="Gallery Image">
+                    <button class="btn btn-dark next-btn" onclick="nextImage()">&#8250;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const images = [
+            "img/gallery/1.webp",
+            "img/gallery/2.webp",
+            "img/gallery/3.webp",
+            "img/gallery/4.jpeg"
+        ];
+        let currentIndex = 0;
+
+        function renderGallery() {
+            const container = document.getElementById("galleryContainer");
+            container.innerHTML = images.map((src, index) => `
+                <div class="col-lg-3 col-md-4 col-6">
+                    <img src="${src}" class="img-fluid gallery-img" alt="Gallery Image" onclick="openModal(${index})">
+                </div>
+            `).join("");
+        }
+
+        function openModal(index) {
+            currentIndex = index;
+            updateModalImage();
+            $("#imageModal").modal("show");
+        }
+
+        function updateModalImage() {
+            document.getElementById("modalImage").src = images[currentIndex];
+        }
+
+        function nextImage() {
+            if (currentIndex < images.length - 1) currentIndex++;
+            updateModalImage();
+        }
+
+        function prevImage() {
+            if (currentIndex > 0) currentIndex--;
+            updateModalImage();
+        }
+
+        renderGallery();
+    </script>
+</body>
+</html>

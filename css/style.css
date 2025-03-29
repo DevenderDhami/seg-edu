@@ -5,9 +5,16 @@
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+.text-justify{
+  text-align: justify;
+}
 
+.trademark {
+  font-size: 10px;
+  vertical-align: super; 
+  font-weight: bold;
+}
 
- 
 .content{
  min-height: 30vh;
 }
